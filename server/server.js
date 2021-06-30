@@ -49,8 +49,17 @@ const songList = [
 ];
 
 app.get('/artist', (req, res) => {
-    console.log(`In /songs GET`);
-    res.send(artistList);
+    let queryText = SELECT *
+    FROM song;
+    pool.query.(queryText)
+    .then((results) => {
+        console.log(`In /songs GET`);
+        res.send(results.rows);
+    })
+    .catch((err) => {
+        console.log(`Error making query ${queryText}`, err);
+        res.sendStatus(500);
+    })   
 });
 
 app.post('/artist', (req, res) => {
@@ -59,6 +68,18 @@ app.post('/artist', (req, res) => {
 });
 
 app.get('/song', (req, res) => {
+    let queryText = `SELECT *
+    FROM artistList;`;
+    pool.query(queryText)
+    .then((results) => {
+        console.log('in/ songs GET');
+        res.send(results.rows);
+    })
+    .catch((err) => {
+        console.log(`Error making query ${queryText}`, err);
+        res.sendStatus(500);
+    })
+
     console.log(`In /songs GET`);
     res.send(songList);
 });

@@ -4,6 +4,15 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = 5000;
 
+const { Pool } = require('pg')
+const pool = new Pool({
+  host: 'localhost',
+  user: 'database-user',
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
+});
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('server/public'));
 
@@ -49,8 +58,8 @@ const songList = [
 ];
 
 app.get('/artist', (req, res) => {
-    let queryText = SELECT *
-    FROM song;
+    let queryText = `SELECT *
+    FROM song`;
     pool.query.(queryText)
     .then((results) => {
         console.log(`In /songs GET`);
